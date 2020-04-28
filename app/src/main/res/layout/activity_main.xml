@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.even.chart_view.CircularRateView
+        android:id="@+id/circularRateView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:defaultRingColor="#666666"
+        app:firstTextColor="#333333"
+        app:firstTextSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:ringWidth="15dp"
+        app:secondTextColor="#999999"
+        app:secondTextSize="10sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

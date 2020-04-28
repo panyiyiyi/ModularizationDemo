@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularRateView">
+        <!--默认圆环颜色-->
+        <attr name="defaultRingColor" format="color"/>
+        <!--圆环宽度-->
+        <attr name="ringWidth" format="dimension"/>
+        <!--主文本的字体大小-->
+        <attr name="firstTextSize" format="dimension"/>
+        <!--主文本文字颜色-->
+        <attr name="firstTextColor" format="color"/>
+        <!--副文本的字体大小-->
+        <attr name="secondTextSize" format="dimension"/>
+        <!--副文本的文字颜色-->
+        <attr name="secondTextColor" format="color"/>
+        <!--副文本提示文字-->
+        <attr name="remindText" format="string"/>
+    </declare-styleable>
+
+</resources>
