@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:ringWidth="15dp"
+        app:ringWidth="35dp"
         app:secondTextColor="#999999"
         app:secondTextSize="10sp" />
 

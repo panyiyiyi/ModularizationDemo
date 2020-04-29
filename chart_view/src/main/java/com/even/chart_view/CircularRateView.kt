@@ -144,7 +144,7 @@ class CircularRateView : View {
 
         val height = if (heightMode == MeasureSpec.AT_MOST) {
             //设置为可以最大尺寸的时候，设置高度为宽度的2/3
-            widthSize / 3 * 2 + paddingBottom + paddingTop
+            widthSize + paddingBottom + paddingTop
         } else {
             heightSize
         }
