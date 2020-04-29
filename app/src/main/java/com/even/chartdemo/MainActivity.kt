@@ -24,16 +24,16 @@ class MainActivity : AppCompatActivity() {
                 CircularRateBean(
                     300f,
                     Color.parseColor("#32BCB8"),
-                    "hhh"
+                    "物业费"
                 ),
                 CircularRateBean(
                     50f,
                     Color.parseColor("#F26782"),
-                    "666"
+                    "药事服务费"
                 ), CircularRateBean(
                     150f,
                     Color.parseColor("#FBC014"),
-                    "76"
+                    "诊金"
                 )
             )
         )

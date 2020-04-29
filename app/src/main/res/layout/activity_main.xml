@@ -15,8 +15,8 @@
         app:firstTextSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:ringWidth="35dp"
+        app:secondText="这是副文本"
         app:secondTextColor="#999999"
         app:secondTextSize="10sp" />
 

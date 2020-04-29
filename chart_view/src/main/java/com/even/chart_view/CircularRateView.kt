@@ -11,6 +11,8 @@ import android.view.View
 import com.even.chart_view.bean.CircularRateBean
 import com.even.common_utils.DisplayUtils
 import com.even.common_utils.PaintUtils
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  *  @author  Created by Even on 2020/4/27
@@ -50,6 +52,18 @@ class CircularRateView : View {
      */
     private var mRadius = 0f
     /**
+     * 文字与圆环距离
+     */
+    private var mDistance: Float
+    /**
+     * 提示文本大小
+     */
+    private var mRemindTextSize: Float
+    /**
+     * 提示文本颜色
+     */
+    private var mRemindTextColor: Int
+    /**
      * 默认圆环颜色
      */
     private var mDefaultRingColor: Int
@@ -68,7 +82,7 @@ class CircularRateView : View {
     /**
      * 提示文本，可以外部设值
      */
-    var remindStr: String?
+    private var secondText: String?
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -95,7 +109,19 @@ class CircularRateView : View {
         )
         mSecondTextColor =
             typeArray.getColor(R.styleable.CircularRateView_secondTextColor, Color.GRAY)
-        remindStr = typeArray.getString(R.styleable.CircularRateView_remindText)
+        secondText = typeArray.getString(R.styleable.CircularRateView_secondText)
+
+        mRemindTextSize = typeArray.getDimension(
+            R.styleable.CircularRateView_remindTextSize,
+            DisplayUtils.sp2px(10)
+        )
+        mRemindTextColor =
+            typeArray.getColor(R.styleable.CircularRateView_remindTextColor, Color.GRAY)
+
+        mDistance = typeArray.getDimension(
+            R.styleable.CircularRateView_remindTextDistance,
+            DisplayUtils.dip2px(10)
+        )
 
         typeArray.recycle()
         init()
@@ -182,10 +208,14 @@ class CircularRateView : View {
             val angle = it.ringValue / mAccount * 360
             mPaint.color = it.ringColor
             canvas.drawArc(mRectF, currentAngle, angle, false, mPaint)
+            drawRemindText(it.ringRemind, currentAngle + angle / 2, canvas)
             currentAngle += angle
         }
 
-        if (remindStr.isNullOrEmpty()) {  //不存在副文本
+        mTextPaint.textAlign = Paint.Align.CENTER
+        mTextPaint.color = mFirstTextColor
+        mTextPaint.textSize = mFirstTextSize
+        if (secondText.isNullOrEmpty()) {  //不存在副文本
             //绘制主文本，处于正中间
             canvas.drawText(
                 mAccount.toString(),
@@ -201,12 +231,33 @@ class CircularRateView : View {
             mTextPaint.color = mSecondTextColor
             mTextPaint.textSize = mSecondTextSize
             canvas.drawText(
-                remindStr!!,
+                secondText!!,
                 mCenterX,
                 mCenterY + PaintUtils.getFontHeight(mTextPaint) + 5f,
                 mTextPaint
             )
         }
+    }
+
+    /**
+     * 绘制提示文字
+     */
+    private fun drawRemindText(remindText: String, middleAngle: Float, canvas: Canvas) {
+        val toRadians = Math.toRadians(middleAngle.toDouble())
+        val textX = (mRadius + mRingWidth + mDistance) * cos(toRadians).toFloat()
+        val textY = (mRadius + mRingWidth + mDistance) * sin(toRadians).toFloat()
+
+
+        mTextPaint.color = mRemindTextColor
+        mTextPaint.textSize = mRemindTextSize
+        if (middleAngle > -90 && middleAngle < 90) {
+            //右半边
+            mTextPaint.textAlign = Paint.Align.LEFT
+        } else if (middleAngle > 90 && middleAngle < 270) {
+            //左半边
+            mTextPaint.textAlign = Paint.Align.RIGHT
+        }
+        canvas.drawText(remindText, mCenterX + textX, mCenterY + textY, mTextPaint)
     }
 
 
