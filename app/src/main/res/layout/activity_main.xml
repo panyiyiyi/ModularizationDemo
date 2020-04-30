@@ -13,6 +13,7 @@
         app:defaultRingColor="#666666"
         app:firstTextColor="#333333"
         app:firstTextSize="20sp"
+        app:isShowRemindText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:ringWidth="35dp"

@@ -25,13 +25,17 @@ class MainActivity : AppCompatActivity() {
                     300f,
                     Color.parseColor("#32BCB8"),
                     "物业费"
+                ), CircularRateBean(
+                    100f,
+                    Color.parseColor("#FFF265"),
+                    "管理费"
                 ),
                 CircularRateBean(
-                    50f,
+                    5f,
                     Color.parseColor("#F26782"),
                     "药事服务费"
                 ), CircularRateBean(
-                    150f,
+                    10f,
                     Color.parseColor("#FBC014"),
                     "诊金"
                 )

@@ -21,6 +21,14 @@
         <attr name="remindTextColor" format="color" />
         <!--提示文本与圆环的距离-->
         <attr name="remindTextDistance" format="dimension" />
+        <!--圆点颜色-->
+        <attr name="circleColor" format="color" />
+        <!--圆点半径-->
+        <attr name="circleRadius" format="dimension" />
+        <!--折线颜色-->
+        <attr name="brokenLineColor" format="color" />
+        <!--是否显示提示文字-->
+        <attr name="isShowRemindText" format="boolean" />
     </declare-styleable>
 
 </resources>

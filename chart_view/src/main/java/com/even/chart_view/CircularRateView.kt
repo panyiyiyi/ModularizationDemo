@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.even.chart_view.bean.CircularRateBean
 import com.even.common_utils.DisplayUtils
@@ -24,6 +25,10 @@ class CircularRateView : View {
      * 绘制View的Paint
      */
     private lateinit var mPaint: Paint
+    /**
+     * 圆点画笔
+     */
+    private lateinit var mCirclePaint: Paint
     /**
      * 绘制文字的Paint
      */
@@ -72,6 +77,19 @@ class CircularRateView : View {
      */
     private var mRingWidth: Float
     /**
+     * 折线颜色
+     */
+    private var mBrokenLineColor: Int
+    /**
+     * 圆点半径
+     */
+    private var mCircleRadius: Float
+    /**
+     * 圆点颜色
+     */
+    private var mCircleColor: Int
+
+    /**
      * 总额
      */
     private var mAccount = 0f
@@ -83,6 +101,14 @@ class CircularRateView : View {
      * 提示文本，可以外部设值
      */
     private var secondText: String?
+    /**
+     * 是否显示提示文字
+     */
+    private var isShowRemindText: Boolean
+    /**
+     * 绘制折线坐标
+     */
+    private val mBrokenLineArray = FloatArray(8)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -118,10 +144,22 @@ class CircularRateView : View {
         mRemindTextColor =
             typeArray.getColor(R.styleable.CircularRateView_remindTextColor, Color.GRAY)
 
+        mBrokenLineColor =
+            typeArray.getColor(R.styleable.CircularRateView_brokenLineColor, Color.GRAY)
+
+        mCircleColor = typeArray.getColor(R.styleable.CircularRateView_circleColor, Color.GRAY)
+
+        mCircleRadius = typeArray.getDimension(
+            R.styleable.CircularRateView_circleRadius,
+            DisplayUtils.dip2px(3)
+        )
+
         mDistance = typeArray.getDimension(
             R.styleable.CircularRateView_remindTextDistance,
             DisplayUtils.dip2px(10)
         )
+        isShowRemindText =
+            typeArray.getBoolean(R.styleable.CircularRateView_isShowRemindText, false)
 
         typeArray.recycle()
         init()
@@ -156,6 +194,11 @@ class CircularRateView : View {
         mTextPaint.textSize = mFirstTextSize
         mTextPaint.textAlign = Paint.Align.CENTER
         mTextPaint.color = mFirstTextColor
+
+        mCirclePaint = Paint()
+        mCirclePaint.isAntiAlias = true
+        mCirclePaint.style = Paint.Style.FILL
+        mCirclePaint.color = mCircleColor
 
         mRectF = RectF()
     }
@@ -208,10 +251,59 @@ class CircularRateView : View {
             val angle = it.ringValue / mAccount * 360
             mPaint.color = it.ringColor
             canvas.drawArc(mRectF, currentAngle, angle, false, mPaint)
-            drawRemindText(it.ringRemind, currentAngle + angle / 2, canvas)
+            if (isShowRemindText) {
+                drawRemind(it.ringRemind, currentAngle + angle / 2, canvas)
+            }
             currentAngle += angle
         }
+        drawCenterText(canvas)
+    }
 
+    /**
+     * 绘制remind内容
+     * @param textRemind 提示文本
+     * @param middleAngle 圆弧中间角度
+     */
+    private fun drawRemind(textRemind: String, middleAngle: Float, canvas: Canvas) {
+        drawDot(middleAngle, canvas)
+        drawRemindText(textRemind, middleAngle, canvas)
+        drawBrokenLine(PaintUtils.getFontLength(mTextPaint, textRemind), middleAngle, canvas)
+
+    }
+
+    /**
+     * 绘制折线
+     * @param remindTextLength 文本长度
+     * @param middleAngle 中间角度
+     */
+    private fun drawBrokenLine(remindTextLength: Float, middleAngle: Float, canvas: Canvas) {
+        mTextPaint.color = mBrokenLineColor
+        val toRadians = Math.toRadians(middleAngle.toDouble())
+        mBrokenLineArray[0] =
+            mCenterX + (mRadius + mRingWidth + mCircleRadius) * cos(toRadians).toFloat()
+        mBrokenLineArray[1] =
+            mCenterX + (mRadius + mRingWidth + mCircleRadius) * sin(toRadians).toFloat()
+        mBrokenLineArray[2] =
+            mCenterX + (mRadius + mRingWidth + mDistance) * cos(toRadians).toFloat()
+        mBrokenLineArray[3] =
+            mCenterY + (mRadius + mRingWidth + mDistance) * sin(toRadians).toFloat()
+        mBrokenLineArray[4] = mBrokenLineArray[2]
+        mBrokenLineArray[5] = mBrokenLineArray[3]
+        mBrokenLineArray[7] = mBrokenLineArray[3]
+        if (middleAngle > -90 && middleAngle < 90) {
+            //右半边
+            mBrokenLineArray[6] = mBrokenLineArray[2] + remindTextLength
+        } else if (middleAngle > 90 && middleAngle < 270) {
+            //左半边
+            mBrokenLineArray[6] = mBrokenLineArray[2] - remindTextLength
+        }
+        canvas.drawLines(mBrokenLineArray, mTextPaint)
+    }
+
+    /**
+     * 绘制中间文本
+     */
+    private fun drawCenterText(canvas: Canvas) {
         mTextPaint.textAlign = Paint.Align.CENTER
         mTextPaint.color = mFirstTextColor
         mTextPaint.textSize = mFirstTextSize
@@ -226,7 +318,6 @@ class CircularRateView : View {
         } else {
             //绘制主文本，位置是文字底部的位置
             canvas.drawText(mAccount.toString(), mCenterX, mCenterY - 5f, mTextPaint)
-
             //绘制副文本
             mTextPaint.color = mSecondTextColor
             mTextPaint.textSize = mSecondTextSize
@@ -239,17 +330,30 @@ class CircularRateView : View {
         }
     }
 
+
+    /**
+     * 绘制小圆点
+     */
+    private fun drawDot(middleAngle: Float, canvas: Canvas) {
+        val toRadians = Math.toRadians(middleAngle.toDouble())
+        val textX = (mRadius + mRingWidth) * cos(toRadians).toFloat()
+        val textY = (mRadius + mRingWidth) * sin(toRadians).toFloat()
+        canvas.drawCircle(mCenterX + textX, mCenterY + textY, mCircleRadius, mCirclePaint)
+    }
+
+
     /**
      * 绘制提示文字
+     * @param remindText  提示文字
+     * @param middleAngle 中间角度
      */
     private fun drawRemindText(remindText: String, middleAngle: Float, canvas: Canvas) {
-        val toRadians = Math.toRadians(middleAngle.toDouble())
-        val textX = (mRadius + mRingWidth + mDistance) * cos(toRadians).toFloat()
-        val textY = (mRadius + mRingWidth + mDistance) * sin(toRadians).toFloat()
-
-
         mTextPaint.color = mRemindTextColor
         mTextPaint.textSize = mRemindTextSize
+
+        val toRadians = Math.toRadians(middleAngle.toDouble())
+        val textX = (mRadius + mRingWidth + mDistance) * cos(toRadians).toFloat()
+        val textY = (mRadius + mRingWidth + mDistance) * sin(toRadians).toFloat() - 10
         if (middleAngle > -90 && middleAngle < 90) {
             //右半边
             mTextPaint.textAlign = Paint.Align.LEFT
@@ -259,7 +363,6 @@ class CircularRateView : View {
         }
         canvas.drawText(remindText, mCenterX + textX, mCenterY + textY, mTextPaint)
     }
-
 
 }
 
