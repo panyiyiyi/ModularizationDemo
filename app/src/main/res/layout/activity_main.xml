@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <com.even.chart_view.RateProgressBarView
+        android:id="@+id/progressBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        app:firstDotValue="60"
+        app:lowColor="#FCC108"
+        app:normalColor="#26B7BC"
+        app:overColor="#FF3631"
+        app:progressDefaultColor="#F5F5F5"
+        app:secondDotValue="120" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btReduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-20" />
+
+        <Button
+            android:id="@+id/btAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+20" />
+
+    </LinearLayout>
 
     <com.even.chart_view.CircularRateView
         android:id="@+id/circularRateView"
@@ -21,4 +56,5 @@
         app:secondTextColor="#999999"
         app:secondTextSize="10sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

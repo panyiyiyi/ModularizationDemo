@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--比例进度条风格-->
+    <declare-styleable name="RateProgressBarView">
+        <!--进度条高度-->
+        <attr name="progressHeight" format="dimension" />
+        <!--第一个点值-->
+        <attr name="firstDotValue" format="float" />
+        <!--第二个点值-->
+        <attr name="secondDotValue" format="float" />
+        <!--当前的值-->
+        <attr name="currentValue" format="float" />
+        <!--当前值文本大小-->
+        <attr name="currentValueTextSize" format="dimension" />
+        <!--少了的颜色-->
+        <attr name="lowColor" format="color" />
+        <!--正常的颜色-->
+        <attr name="normalColor" format="color" />
+        <!--超了的颜色-->
+        <attr name="overColor" format="color" />
+        <!--分界点文本大小-->
+        <attr name="dotTextSize" format="dimension" />
+        <!--分界点文本颜色-->
+        <attr name="dotTextColor" format="color" />
+        <!--进度条默认颜色-->
+        <attr name="progressDefaultColor" format="color" />
+
+    </declare-styleable>
+
+
+    <!--比例圆环样式风格-->
     <declare-styleable name="CircularRateView">
         <!--默认圆环颜色-->
         <attr name="defaultRingColor" format="color" />

@@ -9,6 +9,7 @@ import com.even.common_utils.DisplayUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var mCurrentValue = 20f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         Log.e("Even", "宽度：" + DisplayUtils.getScreenWidth())
         Log.e("Even", "状态栏高度：" + DisplayUtils.getStatusBarHeight(this))
         Log.e("Even", "转换：" + DisplayUtils.dip2px(20))
+
+
+        btReduce.setOnClickListener {
+            mCurrentValue -= 20
+            progressBarView.setValue(60f, 120f, mCurrentValue)
+        }
+
+        btAdd.setOnClickListener {
+            mCurrentValue += 20
+            progressBarView.setValue(60f, 120f, mCurrentValue)
+
+        }
 
         circularRateView.setRateValue(
             arrayListOf(
@@ -31,11 +44,11 @@ class MainActivity : AppCompatActivity() {
                     "管理费"
                 ),
                 CircularRateBean(
-                    5f,
+                    50f,
                     Color.parseColor("#F26782"),
                     "药事服务费"
                 ), CircularRateBean(
-                    10f,
+                    100f,
                     Color.parseColor("#FBC014"),
                     "诊金"
                 )
