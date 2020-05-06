@@ -29,8 +29,13 @@ class MainActivity : AppCompatActivity() {
         btAdd.setOnClickListener {
             mCurrentValue += 20
             progressBarView.setValue(60f, 120f, mCurrentValue)
-
+            progressBarView.setValueColor(
+                Color.parseColor("#ff0000"),
+                Color.parseColor("#ffFF00"),
+                Color.parseColor("#ffFFFF")
+            )
         }
+
 
         circularRateView.setRateValue(
             arrayListOf(

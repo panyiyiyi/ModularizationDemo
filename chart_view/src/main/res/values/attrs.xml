@@ -33,6 +33,8 @@
     <declare-styleable name="CircularRateView">
         <!--默认圆环颜色-->
         <attr name="defaultRingColor" format="color" />
+        <!--圆环半径-->
+        <attr name="ringRadius" format="dimension" />
         <!--圆环宽度-->
         <attr name="ringWidth" format="dimension" />
         <!--主文本的字体大小-->

@@ -144,6 +144,11 @@ class CircularRateView : View {
         mRemindTextColor =
             typeArray.getColor(R.styleable.CircularRateView_remindTextColor, Color.GRAY)
 
+        mRadius = typeArray.getDimension(
+            R.styleable.CircularRateView_ringRadius,
+            DisplayUtils.dip2px(50)
+        )
+
         mBrokenLineColor =
             typeArray.getColor(R.styleable.CircularRateView_brokenLineColor, Color.GRAY)
 
@@ -227,7 +232,7 @@ class CircularRateView : View {
         super.onLayout(changed, left, top, right, bottom)
         mCenterX = (measuredWidth / 2).toFloat()
         mCenterY = (measuredHeight / 2).toFloat()
-        mRadius = (measuredWidth / 4).toFloat()
+//        mRadius = (measuredWidth / 5).toFloat()
 
         mRectF.set(
             mCenterX - mRadius - mRingWidth / 2,
