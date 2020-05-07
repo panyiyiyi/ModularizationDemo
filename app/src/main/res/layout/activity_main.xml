@@ -18,7 +18,6 @@
         app:lowColor="#FCC108"
         app:normalColor="#26B7BC"
         app:overColor="#FF3631"
-        app:progressDefaultColor="#F5F5F5"
         app:secondDotValue="120" />
 
     <LinearLayout
@@ -52,11 +51,22 @@
         app:isShowRemindText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:ringRadius="30dp"
         app:ringWidth="35dp"
         app:secondText="这是副文本"
         app:secondTextColor="#999999"
         app:secondTextSize="10sp" />
+
+    <Button
+        android:id="@+id/btAddValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加内容" />
+
+    <Button
+        android:id="@+id/btShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示提示内容" />
 
 
 </LinearLayout>

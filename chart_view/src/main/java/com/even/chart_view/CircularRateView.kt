@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.even.chart_view.bean.CircularRateBean
 import com.even.common_utils.DisplayUtils
@@ -100,11 +99,11 @@ class CircularRateView : View {
     /**
      * 提示文本，可以外部设值
      */
-    private var secondText: String?
+    private var mSecondText: String?
     /**
      * 是否显示提示文字
      */
-    private var isShowRemindText: Boolean
+    private var mIsShowRemindText: Boolean
     /**
      * 绘制折线坐标
      */
@@ -135,7 +134,7 @@ class CircularRateView : View {
         )
         mSecondTextColor =
             typeArray.getColor(R.styleable.CircularRateView_secondTextColor, Color.GRAY)
-        secondText = typeArray.getString(R.styleable.CircularRateView_secondText)
+        mSecondText = typeArray.getString(R.styleable.CircularRateView_secondText)
 
         mRemindTextSize = typeArray.getDimension(
             R.styleable.CircularRateView_remindTextSize,
@@ -163,7 +162,7 @@ class CircularRateView : View {
             R.styleable.CircularRateView_remindTextDistance,
             DisplayUtils.dip2px(10)
         )
-        isShowRemindText =
+        mIsShowRemindText =
             typeArray.getBoolean(R.styleable.CircularRateView_isShowRemindText, false)
 
         typeArray.recycle()
@@ -181,6 +180,14 @@ class CircularRateView : View {
         dataLists.forEach {
             mAccount += it.ringValue
         }
+        invalidate()
+    }
+
+    /**
+     * 设值是否显示提示内容
+     */
+    fun setIsShowRemind(isShowRemindText: Boolean) {
+        this.mIsShowRemindText = isShowRemindText
         invalidate()
     }
 
@@ -256,7 +263,7 @@ class CircularRateView : View {
             val angle = it.ringValue / mAccount * 360
             mPaint.color = it.ringColor
             canvas.drawArc(mRectF, currentAngle, angle, false, mPaint)
-            if (isShowRemindText) {
+            if (mIsShowRemindText) {
                 drawRemind(it.ringRemind, currentAngle + angle / 2, canvas)
             }
             currentAngle += angle
@@ -312,7 +319,7 @@ class CircularRateView : View {
         mTextPaint.textAlign = Paint.Align.CENTER
         mTextPaint.color = mFirstTextColor
         mTextPaint.textSize = mFirstTextSize
-        if (secondText.isNullOrEmpty()) {  //不存在副文本
+        if (mSecondText.isNullOrEmpty()) {  //不存在副文本
             //绘制主文本，处于正中间
             canvas.drawText(
                 mAccount.toString(),
@@ -327,7 +334,7 @@ class CircularRateView : View {
             mTextPaint.color = mSecondTextColor
             mTextPaint.textSize = mSecondTextSize
             canvas.drawText(
-                secondText!!,
+                mSecondText!!,
                 mCenterX,
                 mCenterY + PaintUtils.getFontHeight(mTextPaint) + 5f,
                 mTextPaint

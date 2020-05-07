@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     var mCurrentValue = 20f
+    var mIsShow = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,35 +30,49 @@ class MainActivity : AppCompatActivity() {
         btAdd.setOnClickListener {
             mCurrentValue += 20
             progressBarView.setValue(60f, 120f, mCurrentValue)
-            progressBarView.setValueColor(
-                Color.parseColor("#ff0000"),
-                Color.parseColor("#ffFF00"),
-                Color.parseColor("#ffFFFF")
+//            progressBarView.setValueColor(
+//                Color.parseColor("#ff0000"),
+//                Color.parseColor("#ffFF00"),
+//                Color.parseColor("#ffFFFF")
+//            )
+        }
+
+        btShow.setOnClickListener {
+            if (!mIsShow) {
+                circularRateView.setIsShowRemind(true)
+                mIsShow = true
+            } else {
+                circularRateView.setIsShowRemind(false)
+                mIsShow = false
+            }
+
+        }
+
+        btAddValue.setOnClickListener {
+            circularRateView.setRateValue(
+                arrayListOf(
+                    CircularRateBean(
+                        300f,
+                        Color.parseColor("#32BCB8"),
+                        "物业费"
+                    ), CircularRateBean(
+                        100f,
+                        Color.parseColor("#FFF265"),
+                        "管理费"
+                    ),
+                    CircularRateBean(
+                        50f,
+                        Color.parseColor("#F26782"),
+                        "药事服务费"
+                    ), CircularRateBean(
+                        100f,
+                        Color.parseColor("#FBC014"),
+                        "诊金"
+                    )
+                )
             )
         }
 
 
-        circularRateView.setRateValue(
-            arrayListOf(
-                CircularRateBean(
-                    300f,
-                    Color.parseColor("#32BCB8"),
-                    "物业费"
-                ), CircularRateBean(
-                    100f,
-                    Color.parseColor("#FFF265"),
-                    "管理费"
-                ),
-                CircularRateBean(
-                    50f,
-                    Color.parseColor("#F26782"),
-                    "药事服务费"
-                ), CircularRateBean(
-                    100f,
-                    Color.parseColor("#FBC014"),
-                    "诊金"
-                )
-            )
-        )
     }
 }
