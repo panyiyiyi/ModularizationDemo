@@ -1,7 +1,6 @@
 # ModularizationDemo
 
 效果图
-
 !![image](https://github.com/panyiyiyi/ModularizationDemo/blob/master/test.gif)
 
 引用方式
