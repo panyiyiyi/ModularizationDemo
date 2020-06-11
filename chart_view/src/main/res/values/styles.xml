@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--弹窗动画-->
+    <style name="dialog_fragment_anim">
+        <item name="android:windowEnterAnimation">@anim/dialog_show_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_show_out</item>
+    </style>
+</resources>

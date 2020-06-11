@@ -67,6 +67,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="显示提示内容" />
+    <Button
+        android:id="@+id/btDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="弹窗" />
 
 
 </LinearLayout>
