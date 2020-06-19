@@ -1,6 +1,5 @@
 package com.even.chart_view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -24,65 +23,80 @@ class CircularRateView : View {
      * 绘制View的Paint
      */
     private lateinit var mPaint: Paint
+
     /**
      * 圆点画笔
      */
     private lateinit var mCirclePaint: Paint
+
     /**
      * 绘制文字的Paint
      */
     private lateinit var mTextPaint: Paint
+
     /**
      * 圆环内切圆矩形
      */
     private lateinit var mRectF: RectF
+
     /**
      * 主文本字体大小，颜色
      */
     private var mFirstTextSize: Float
     private var mFirstTextColor: Int
+
     /**
      * 副文本字体大小，颜色
      */
     private var mSecondTextSize: Float
     private var mSecondTextColor: Int
+
     /**
      * 圆环中心点坐标
      */
     private var mCenterX = 0f
     private var mCenterY = 0f
+
     /**
      * 圆环半径
      */
     private var mRadius = 0f
+
     /**
      * 文字与圆环距离
      */
     private var mDistance: Float
+
     /**
      * 提示文本大小
      */
     private var mRemindTextSize: Float
+
     /**
      * 提示文本颜色
      */
     private var mRemindTextColor: Int
+
     /**
      * 默认圆环颜色
      */
     private var mDefaultRingColor: Int
+
     /**
      * 圆环宽度
      */
     private var mRingWidth: Float
+
     /**
      * 折线颜色
      */
     private var mBrokenLineColor: Int
+
     /**
      * 圆点半径
      */
     private var mCircleRadius: Float
+
     /**
      * 圆点颜色
      */
@@ -92,18 +106,22 @@ class CircularRateView : View {
      * 总额
      */
     private var mAccount = 0f
+
     /**
      * 圆环数据集合
      */
     private var mRingDataLists = mutableListOf<CircularRateBean>()
+
     /**
      * 提示文本，可以外部设值
      */
     private var mSecondText: String?
+
     /**
      * 是否显示提示文字
      */
     private var mIsShowRemindText: Boolean
+
     /**
      * 绘制折线坐标
      */
@@ -111,7 +129,6 @@ class CircularRateView : View {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    @SuppressLint("Recycle")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,

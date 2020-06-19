@@ -32,7 +32,6 @@ class WheelView : View {
     /**
      * Top and bottom shadows colors
      */
-    //private static final int[] SHADOWS_COLORS = new int[] { 0xeeffffff, 0xeaffffff, 0x33ffffff };
     private val SHADOWS_COLORS = intArrayOf(0x33ffffff, 0x33ffffff, 0x33ffffff)
 
     /**
@@ -850,6 +849,9 @@ class WheelView : View {
      * @param index the item index
      * @return item mContentView or empty mContentView if index is out of bounds
      */
+    /**
+     * 返回指定index 的View，当前View可能为null
+     */
     private fun getItemView(index: Int): View? {
         var index = index
         if (viewAdapter == null || viewAdapter!!.getItemsCount() === 0) {
@@ -860,7 +862,7 @@ class WheelView : View {
             return viewAdapter!!.getEmptyItem(recycle.getEmptyItem(), itemsLayout!!)
         } else {
             while (index < 0) {
-                index = count + index
+                index += count
             }
         }
         index %= count
@@ -868,7 +870,7 @@ class WheelView : View {
     }
 
     /**
-     * Stops scrolling
+     * 停止滑动
      */
     fun stopScrolling() {
         scroller!!.stopScrolling()

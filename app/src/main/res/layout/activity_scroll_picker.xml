@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.even.chart_view.dialog.views.ScrollPickerView
+        android:id="@+id/scrollPickerView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="20dp" />
+
+    <com.even.chart_view.dialog.views.ScrollPickerView
+        android:id="@+id/scrollPickerView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="20dp" />
+</LinearLayout>

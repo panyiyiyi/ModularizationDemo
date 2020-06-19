@@ -1,11 +1,11 @@
 package com.even.chartdemo
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.even.chart_view.bean.CircularRateBean
-import com.even.chart_view.dialog.DataSelectorDialog
 import com.even.common_utils.DisplayUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,10 +23,15 @@ class MainActivity : AppCompatActivity() {
         Log.e("Even", "转换：" + DisplayUtils.dip2px(20))
 
         btDialog.setOnClickListener {
-            val selectDialogFragment =
-                DataSelectorDialog(5, "标题", listOf("5555", "2222", "asdfaf", "lll"))
-            supportFragmentManager.beginTransaction().add(selectDialogFragment, "f")
-                .commitAllowingStateLoss()
+            startActivity(Intent(this, ScrollPickerActivity::class.java))
+//            val selectDialogFragment =
+//                DataSelectorDialog(
+//                    5,
+//                    "标题",
+//                    listOf("这是中文", "哈哈哈", "阿瑟东发阿达法阿瑟东发阿瑟东发", "单独", "大士大夫", "a答复")
+//                )
+//            supportFragmentManager.beginTransaction().add(selectDialogFragment, "f")
+//                .commitAllowingStateLoss()
         }
 
 
